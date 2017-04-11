@@ -32,9 +32,9 @@ class DefaultFileCollectionSnapshotSerializerTest extends SerializerSpec {
         when:
         def hash = Hashing.md5().hashString("foo", Charsets.UTF_8)
         DefaultFileCollectionSnapshot out = serialize(new DefaultFileCollectionSnapshot([
-            "/1": new DefaultNormalizedFileSnapshot("1", DirSnapshot.getInstance()),
-            "/2": new DefaultNormalizedFileSnapshot("2", MissingFileSnapshot.getInstance()),
-            "/3": new DefaultNormalizedFileSnapshot("3", new FileHashSnapshot(hash))
+            "/1": new DefaultNormalizedFileSnapshot("/1", "1", DirSnapshot.getInstance()),
+            "/2": new DefaultNormalizedFileSnapshot("/2", "2", MissingFileSnapshot.getInstance()),
+            "/3": new DefaultNormalizedFileSnapshot("/3", "3", new FileHashSnapshot(hash))
         ], UNORDERED, true), serializer)
 
         then:
@@ -54,9 +54,9 @@ class DefaultFileCollectionSnapshotSerializerTest extends SerializerSpec {
         when:
         def hash = Hashing.md5().hashString("foo", Charsets.UTF_8)
         DefaultFileCollectionSnapshot out = serialize(new DefaultFileCollectionSnapshot([
-            "/3": new DefaultNormalizedFileSnapshot("3", new FileHashSnapshot(hash)),
-            "/2": new DefaultNormalizedFileSnapshot("2", MissingFileSnapshot.getInstance()),
-            "/1": new DefaultNormalizedFileSnapshot("1", DirSnapshot.getInstance())
+            "/3": new DefaultNormalizedFileSnapshot("/3", "3", new FileHashSnapshot(hash)),
+            "/2": new DefaultNormalizedFileSnapshot("/2", "2", MissingFileSnapshot.getInstance()),
+            "/1": new DefaultNormalizedFileSnapshot("/1", "1", DirSnapshot.getInstance())
         ], ORDERED, true), serializer)
 
         then:
