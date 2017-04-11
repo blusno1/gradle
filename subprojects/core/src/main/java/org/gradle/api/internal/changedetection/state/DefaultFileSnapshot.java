@@ -20,6 +20,8 @@ import com.google.common.hash.HashCode;
 import org.gradle.api.file.RelativePath;
 import org.gradle.internal.nativeintegration.filesystem.FileType;
 
+import java.util.Collections;
+
 class DefaultFileSnapshot implements FileSnapshot {
     final String path;
     final FileType type;
@@ -76,5 +78,15 @@ class DefaultFileSnapshot implements FileSnapshot {
             return new DefaultFileSnapshot(path, relativePath, type, root, new FileHashSnapshot(contentHash));
         }
         return this;
+    }
+
+    @Override
+    public FileSnapshot getRoot() {
+        return this;
+    }
+
+    @Override
+    public Iterable<? extends FileSnapshot> getElements() {
+        return Collections.singleton(this);
     }
 }
