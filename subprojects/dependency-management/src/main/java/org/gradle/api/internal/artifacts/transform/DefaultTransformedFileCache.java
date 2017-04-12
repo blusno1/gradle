@@ -108,7 +108,7 @@ public class DefaultTransformedFileCache implements TransformedFileCache, Stoppa
             FileCollectionSnapshot snapshot = fileCollectionSnapshotter.snapshot(new SimpleFileCollection(inputFile), TaskFilePropertyCompareStrategy.UNORDERED, TaskFilePropertySnapshotNormalizationStrategy.ABSOLUTE);
 
             DefaultBuildCacheHasher hasher = new DefaultBuildCacheHasher();
-            snapshot.appendToHasher(hasher);
+            hasher.putBytes(snapshot.getHash().asBytes());
             inputFileHash = hasher.hash();
             if (inputIsFromCache) {
                 inputFileToContentHash.put(inputFile, inputFileHash);
