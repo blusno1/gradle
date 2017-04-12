@@ -104,4 +104,8 @@ class DefaultFileSnapshot implements FileSnapshot {
     public String getDisplayName() {
         return getPath();
     }
+
+    @Override
+    public void close() throws IOException {
+    }
 }
