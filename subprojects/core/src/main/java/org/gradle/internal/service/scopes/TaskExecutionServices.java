@@ -190,8 +190,8 @@ public class TaskExecutionServices {
         return new DefaultGenericFileCollectionSnapshotter(fileSnapshotTreeFactory, stringInterner);
     }
 
-    ClasspathSnapshotter createClasspathSnapshotter(FileSnapshotTreeFactory fileSnapshotTreeFactory, StringInterner stringInterner, ClasspathEntryHasher classpathEntryHasher) {
-        return new DefaultClasspathSnapshotter(fileSnapshotTreeFactory, stringInterner, classpathEntryHasher);
+    ClasspathSnapshotter createClasspathSnapshotter(FileSnapshotTreeFactory fileSnapshotTreeFactory, StringInterner stringInterner) {
+        return new DefaultClasspathSnapshotter(fileSnapshotTreeFactory, stringInterner);
     }
 
     CompileClasspathSnapshotter createCompileClasspathSnapshotter(FileSnapshotTreeFactory fileSnapshotTreeFactory, StringInterner stringInterner, TaskHistoryStore store) {
