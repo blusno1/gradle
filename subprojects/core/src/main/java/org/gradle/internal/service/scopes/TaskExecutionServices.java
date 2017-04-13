@@ -25,17 +25,12 @@ import org.gradle.api.internal.cache.StringInterner;
 import org.gradle.api.internal.changedetection.TaskArtifactStateRepository;
 import org.gradle.api.internal.changedetection.changes.DefaultTaskArtifactStateRepository;
 import org.gradle.api.internal.changedetection.changes.ShortCircuitTaskArtifactStateRepository;
-import org.gradle.api.internal.changedetection.state.AbiExtractingClasspathContentHasher;
 import org.gradle.api.internal.changedetection.state.BuildScopeFileTimeStampInspector;
 import org.gradle.api.internal.changedetection.state.CacheBackedFileSnapshotRepository;
 import org.gradle.api.internal.changedetection.state.CacheBackedTaskHistoryRepository;
-import org.gradle.api.internal.changedetection.state.CachingClasspathEntryHasher;
 import org.gradle.api.internal.changedetection.state.CachingFileHasher;
-import org.gradle.api.internal.changedetection.state.ClasspathEntryHasher;
 import org.gradle.api.internal.changedetection.state.ClasspathSnapshotter;
 import org.gradle.api.internal.changedetection.state.CompileClasspathSnapshotter;
-import org.gradle.api.internal.changedetection.state.DefaultClasspathContentHasher;
-import org.gradle.api.internal.changedetection.state.DefaultClasspathEntryHasher;
 import org.gradle.api.internal.changedetection.state.DefaultClasspathSnapshotter;
 import org.gradle.api.internal.changedetection.state.DefaultCompileClasspathSnapshotter;
 import org.gradle.api.internal.changedetection.state.DefaultFileCollectionSnapshotterRegistry;
@@ -197,8 +192,7 @@ public class TaskExecutionServices {
 
     CompileClasspathSnapshotter createCompileClasspathSnapshotter(FileSnapshotTreeFactory fileSnapshotTreeFactory, StringInterner stringInterner, TaskHistoryStore store) {
         PersistentIndexedCache<HashCode, HashCode> signatureCache = store.createCache("jvmClassSignatures", HashCode.class, new HashCodeSerializer(), 400000, true);
-        ClasspathEntryHasher classpathEntryHasher = new CachingClasspathEntryHasher(new DefaultClasspathEntryHasher(new AbiExtractingClasspathContentHasher(new DefaultClasspathContentHasher())), signatureCache);
-        return new DefaultCompileClasspathSnapshotter(fileSnapshotTreeFactory, stringInterner, classpathEntryHasher, signatureCache);
+        return new DefaultCompileClasspathSnapshotter(fileSnapshotTreeFactory, stringInterner, signatureCache);
     }
 
     FileCollectionSnapshotterRegistry createFileCollectionSnapshotterRegistry(ServiceRegistry serviceRegistry) {
