@@ -23,7 +23,6 @@ import org.gradle.api.internal.changedetection.state.FileCollectionSnapshotter
 import org.gradle.api.internal.changedetection.state.InMemoryCacheDecoratorFactory
 import org.gradle.cache.internal.CacheScopeMapping
 import org.gradle.cache.internal.DefaultCacheRepository
-import org.gradle.caching.internal.BuildCacheHasher
 import org.gradle.internal.classpath.CachedJarFileStore
 import org.gradle.internal.util.BiFunction
 import org.gradle.test.fixtures.concurrent.ConcurrentSpec
@@ -337,7 +336,7 @@ class DefaultTransformedFileCacheTest extends ConcurrentSpec {
 
     def snapshot(HashCode hashCode) {
         FileCollectionSnapshot snapshot = Stub(FileCollectionSnapshot)
-        snapshot.appendToHasher(_) >> { BuildCacheHasher hasher -> hasher.putBytes(hashCode.asBytes()) }
+        snapshot.getHash() >> hashCode
         snapshot
     }
 }
